@@ -10,4 +10,8 @@ from .service_time import *
 from .format_data import *
 #test comment
 #test comment 2
+<<<<<<< HEAD
 #dylan- test comment
+=======
+#test comment
+>>>>>>> 56f7c9b1690ce2ce25195832cb4d2f4ca5ce6e69
