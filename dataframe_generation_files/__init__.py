@@ -11,4 +11,11 @@ from .format_data import *
 #test comment
 #test comment 2
 #test comment
+<<<<<<< HEAD
 #Dylan test comment 2
+=======
+
+
+
+#test Merge (callie)
+>>>>>>> d884595132a9745c88d64ee4a496147d58a9e165
