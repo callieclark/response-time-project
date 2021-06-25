@@ -82,16 +82,18 @@ def create_polys(PS_data,Gs,shp='Chicago_PB.shp',folder='Simulation_Data'):
         polys['node'][x]=trr
 
         #eventually functionalize this so csv is an input
+
     police_staffing=pd.read_csv('Simulation_Data/PoliceBeat_staffing.csv',index_col='assigned_district').drop(columns=['Unnamed: 0'])
     police_staffing.index=police_staffing.index.astype(str)
     polys=polys.merge(police_staffing[['#Officers']],how='left',left_on='dist_num',right_index=True)
-    polys['NoOfOfficers']=round(polys['#Officers']/5) #5 assumes officers work 40hr weeks --> may need to tune assumtion
+    polys['NoOfOfficers']=round((polys['#Officers']/5)*0.75) #5 assumes officers work 40hr weeks
+    #to do factor in 0.75 of patrolling officers are patrolling
 
     return polys
 
 
 def eva_resp_time(police,Crime,percent_operating,ndk,polys,Gs):
-    
+
     Officers_maxed_out=0
     Resp_time = []
     orig_node = police
