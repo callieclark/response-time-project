@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 def check_lat_long(df):
     #This function checks that latitude and longitude are specified
     #To Do: add functionality to self specify colum names and re-assign
@@ -42,8 +43,9 @@ def set_priority(df, map_dict=UCR_dict, code_col='FBI Code'):
 
     return df
 
-def set_number_responders(df,number_per_call=2):
-    #This function creates a new column and sets the number of responders for each CFS.
-    #Right now the number is constant for all situations, but functionality can be added to change that
-    df.loc[:,'#Responders']=number_per_call
+def set_number_units(df):
+    #This function creates a new column and sets the number of units for each CFS based on the ucr.
+    #The number is based on UCR with 2-3 vehicles responding to violent/index_col and 1-2 responding to non-index
+    df.loc[:,'#Units']=np.random.randint(2, 4, size = len(df))-(df['Priority']==3)*1
+
     return df

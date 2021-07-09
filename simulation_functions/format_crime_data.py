@@ -53,11 +53,11 @@ def create_groups(data, grouping):
 
 def create_crime_dfs(csv, grouping,folder='Chicago_Data/Daily_Profiles'):
     data=format_data(csv,folder='Chicago_Data/Daily_Profiles')
-    data=data[[ 'Timestamp','Latitude', 'Longitude','Priority','Service Time']]
+    data=data[[ 'Timestamp','Latitude', 'Longitude','Priority','Service Time', '#Units']]
     if grouping!='BAU':
         Group1,Group2=create_groups(data, grouping)
-        Group1=Group1[[ 'Timestamp','Latitude', 'Longitude','Priority','Service Time']]
-        Group2=Group2[[ 'Timestamp','Latitude', 'Longitude','Priority','Service Time']]
+        Group1=Group1[[ 'Timestamp','Latitude', 'Longitude','Priority','Service Time', '#Units']]
+        Group2=Group2[[ 'Timestamp','Latitude', 'Longitude','Priority','Service Time','#Units']]
     elif grouping=='BAU':
         print('BAU: No Groupings')
         Group1='not specified'
@@ -111,7 +111,10 @@ def create_time_sequence(crime_data):
         ss = (srvtime_object[i]-ss_ini).total_seconds()
         ser_time.append(ss)
 
+
         time_min = [x / 60 for x in time_seq]
         ser_min = [x / 60 for x in ser_time]
 
-    return time_min,ser_min
+    num_units = crime_data['#Units'].values.tolist()
+
+    return time_min,ser_min, num_units

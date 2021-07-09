@@ -88,5 +88,5 @@ def create_csv(daily_profiles,df,folder):
     for i in daily_profiles.keys():
         for j in range(len(daily_profiles[i])):
             df_temp=df[df['Date']==daily_profiles[i][j]]
-            _temp=df_temp[['Timestamp','Latitude','Longitude','#Responders','Police','Priority','Service Time']].set_index('Timestamp').sort_index()
+            _temp=df_temp[['Timestamp','Latitude','Longitude','#Units','Police','Priority','Service Time']].set_index('Timestamp').sort_index()
             _temp.to_csv(folder+'/'+str(i)+'_'+str(j)+'_timestamp.csv')
