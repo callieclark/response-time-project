@@ -99,6 +99,8 @@ def eva_resp_time(police,Crime,percent_operating,ndk,polys,Gs):
     orig_node = police # node number for all police stations
     #officer_demand=[[] for j in range(len(orig_node))]
     officer_demand= {k: [] for k in polys['dist_num'].values }
+    time_list=[]
+    tot_officer_demand=[]
 
     my_array=[]
     arr_crime = [[0 for i in range(2)] for j in range(len(orig_node))]
@@ -116,7 +118,7 @@ def eva_resp_time(police,Crime,percent_operating,ndk,polys,Gs):
         for y in range(3,9):
             PC_stalk[x][y]=[]
     columnIndex = 0
-    #print('PC_stalk',PC_stalk)
+    # ('PC_stalk',PC_stalk)
     for j in range(len(Crime[0])): #loops through every cfs in the day
         #dest_node = Crime[1][j]
         Crime_node = Crime[1][j]
@@ -160,6 +162,9 @@ def eva_resp_time(police,Crime,percent_operating,ndk,polys,Gs):
 
             num_units=num_units-1
 
+
+
+
         if j !=len(Crime[0])-1: #this loop updates queue during simulation
             ## Check if a PC node is going to available
             for statn in range(len(orig_node)): #check statn vs idx
@@ -194,6 +199,11 @@ def eva_resp_time(police,Crime,percent_operating,ndk,polys,Gs):
 
 
         officer_demand[dist_no].append((Crime_time,PC_stalk[idx][1]+PC_stalk[idx][2]))
+        time_list.append(Crime_time)
+        tot_officer_demand.append(np.sum([PC_stalk[i][1]+PC_stalk[i][2] for i in range(len(orig_node))]))
+        #add sum of all PC_stalk[idx][1] over index to to_list
+        #add number seconds to list
+
     d=[]
 
     # The for loop below processes leftovers when all crimes have been served
@@ -221,4 +231,4 @@ def eva_resp_time(police,Crime,percent_operating,ndk,polys,Gs):
             PC_stalk[idx][8].remove(PC_stalk[idx][8][0])
     Resp_time.extend(d) #does this capture all the wait times?
 
-    return Resp_time,Officers_maxed_out, officer_demand
+    return Resp_time,Officers_maxed_out, officer_demand,time_list, tot_officer_demand
