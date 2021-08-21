@@ -124,7 +124,7 @@ def eva_resp_time(police,Crime,percent_operating,ndk,polys,Gs):
         Crime_node = Crime[1][j]
         Crime_time = Crime[0][j]
         Ser_time = Crime[2][j]
-        num_units = Crime[4][j]
+        num_units = Crime[4][j] #number of units that respond to the crime
         if j !=len(Crime[0])-1:
             Crime_time_next = Crime[0][j+1]#ask Chitra what this does
 
@@ -140,8 +140,12 @@ def eva_resp_time(police,Crime,percent_operating,ndk,polys,Gs):
             print(percent_operating,' % Reduction returns number less than one for district ',dist_no)
             print('Rounded up to 1 unit')
 
+        # if PC_stalk[idx][1] >= NoOff:
+        #     Officers_maxed_out+=1
 
+        counter=0
         while num_units > 0:
+            #PC_stalk[idx][1] is the number of officers dispatched
             if PC_stalk[idx][1] < NoOff:  # if the officer are available : assign crime as active
                     PC_stalk[idx][1]= PC_stalk[idx][1]+1
                     #need to figure out how to remove the right number below
@@ -154,13 +158,15 @@ def eva_resp_time(police,Crime,percent_operating,ndk,polys,Gs):
 
 
             else : #-->  if officers are already occupied make a waiting queue for all the crimes being assinged
-                Officers_maxed_out+=1
+                if counter==0:
+                    Officers_maxed_out+=1
                 PC_stalk[idx][2]= PC_stalk[idx][2]+1
                 PC_stalk[idx][6].append(Crime_node)
                 PC_stalk[idx][7].append(Crime_time)
                 PC_stalk[idx][8].append(Ser_time)
 
             num_units=num_units-1
+            counter+=1
 
 
 
